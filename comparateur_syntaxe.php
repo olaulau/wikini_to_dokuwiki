@@ -8,8 +8,8 @@ function display_wikini_side($article, $w) {
 }
 
 function display_dokuwiki_side($article, $w) {
-	global $dokuwiki_install_dir, $pages_subdir;
-	$article_filename = $dokuwiki_install_dir . "/" . $pages_subdir . '/' . article_name_convertion($article) . '.txt';
+	global $dokuwiki_install_dir, $pages_subdir, $data_directory;
+	$article_filename = $dokuwiki_install_dir . '/' . $data_directory . "/" . $pages_subdir . '/' . article_name_convertion($article) . '.txt';
 	$fh = fopen($article_filename, 'r');
 
 	while (($buffer = fgets($fh, 4096)) !== false) {
