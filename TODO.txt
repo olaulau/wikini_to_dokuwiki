@@ -1,0 +1,12 @@
+- formatage
+	- text barré
+	- HTML : https://www.dokuwiki.org/wiki:syntax#embedding_html_and_php
+	- code block : https://www.dokuwiki.org/wiki:syntax#code_blocks
+		- TcpIpReinstaller > "si l'on souhaite" -> convertir en 'tabulations' ?
+
+- préparer passage sur GitHub
+	- tout traduire (code, commentaires)
+
+- fonctionnalités
+	- vérifier fonctionnement historique
+	- meta ? (osef des ACL, quoi d'autre ?)

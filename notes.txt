@@ -1,0 +1,51 @@
+wikini :
+- URL : wakka.php?wiki=<article>
+- article de démarrage : PagePrincipale
+- syntaxe : http://www.wikini.net/wakka.php?wiki=ReglesDeFormatage
+
+
+
+dokuwiki :
+- articles actuels :
+  - dans data/pages/
+  - un fichier texte par article : <article>.txt , <article> en minuscrule !
+- historique :
+  - dane data/meta/ : <article>.changes décris les versions disponibles avec le format : "timestamp	user	flag	article	comment"
+  - dans data/attic/: un fichier gzip par page : <article>.<timestamp>.txt.gz
+- URL : doku.php?id=<article>
+- article de démarrage : start (configurable)
+- syntaxe : https://www.dokuwiki.org/wiki:syntax
+
+
+
+
+conversions de syntaxe :
+- titres : aucun changement
+- séparateur horizontal : aucun changement
+
+- puces :							' - '				=> 				'* '
+- listes :							' 1) ' 				=>				'- '
+	=> attention à la dernière ligne !
+- pas de formatage :				'"" X ""'			=>				'<nowiki> X </nowiki>'
+
+- liens
+  - [[http://www.mon-site.org]]							=>				[[http://www.google.fr]]
+	[[http://www.mon-site.org Mon-site]]				=>				[[http://www.google.fr|Ce lien pointe vers Google]]
+	[[P2P]]												=>				[[nom de page]]
+	[[P2P Page sur le P2P]]								=>				[[nom de page|texte pour le titre]]
+	les liens dans les titre (gros liens : === [[lien]] === ) ne fonctionnent pas. => juste mise en gras
+	le CamelCase étant supprimé par les minuscules dokuwiki, on ajoute des underscore entre les mots : camel_case
+	les liens auto de wikini (CamelCase) n'ont pas d'équivalent, il faut les générer
+	
+- mises en forme
+  - gras : **xxx** (identique)
+  - italique :						//xxx// 							(identique)
+  - souligné : 						__xxx__ 							(identique)
+  - chasse fixe :					## X ##				=>				'' X ''
+  - barré :							@@xxx@@				=> 				<del>xxx</del>
+  - code :							%% X %%				=>				<code> X </code>
+	- code d'un langage :			%%(java) X%%		=>				<code java> X </code>
+
+
+ACL ?
+- 
