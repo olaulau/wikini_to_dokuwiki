@@ -106,14 +106,14 @@ function traitement_puces($chaine, $debug=false)
 
 function traitement_no_format($chaine, $debug=false)
 {
-	// "" content ""	=>		<nowiki> content </nowiki>
+	// "" content ""	=>		<html> content </html>
 	// words are everything without '""'
-	$nb_res = preg_match_all('@""(((?!"").)*)""@', $chaine, $matches);
+	$nb_res = preg_match_all('@""(((?!"").)*)""@s', $chaine, $matches);
 	if($debug) echo "$nb_res matches : <br/>\n";
 
 	$chaine_finale = $chaine;
 	foreach ($matches[1] as $key => $value) {
-		$transformed = "<nowiki>$value</nowiki>";
+		$transformed = "<html>$value</html>";
 		if($debug) echo htmlspecialchars('""'.$value.'""'." => $transformed") . " <br/> \n";
 		$tmp = str_replace($matches[0][$key], $transformed, $chaine_finale, $count);
 
