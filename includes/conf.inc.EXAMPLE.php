@@ -3,6 +3,7 @@
 
 // config utilisateur
 $mysql_host = "localhost";
+$mysql_post = "3306";
 $mysql_login = "";
 $mysql_password = "";
 $base = "wikini";

@@ -21,6 +21,7 @@ dokuwiki :
 
 conversions de syntaxe :
 - titres : aucun changement
+	- les titres doivent être le seul formatage présent sur la ligne. les balises de lien, puces ... entrent en conflit.
 - séparateur horizontal : aucun changement
 
 - puces :							' - '				=> 				'* '
@@ -33,10 +34,9 @@ conversions de syntaxe :
 	[[http://www.mon-site.org Mon-site]]				=>				[[http://www.google.fr|Ce lien pointe vers Google]]
 	[[P2P]]												=>				[[nom de page]]
 	[[P2P Page sur le P2P]]								=>				[[nom de page|texte pour le titre]]
-	les liens dans les titre (gros liens : === [[lien]] === ) ne fonctionnent pas. => juste mise en gras
 	le CamelCase étant supprimé par les minuscules dokuwiki, on ajoute des underscore entre les mots : camel_case
 	les liens auto de wikini (CamelCase) n'ont pas d'équivalent, il faut les générer
-	
+
 - mises en forme
   - gras : **xxx** (identique)
   - italique :						//xxx// 							(identique)

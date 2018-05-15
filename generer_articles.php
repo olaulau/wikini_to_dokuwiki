@@ -32,19 +32,18 @@ $wikini = new Wikini();
 
 
 // écriture des articles
-$array = $wikini->get_all_pages();
+$array = $wikini->get_last_pages();
 // var_dump($array); die;
 $pages_out_dir = $out_directory . "/" . $pages_subdir;
 $cpt = 0;
 foreach ($array as $key => $value) {
-	$data = $value[0];
 // 	if($data['tag'] != 'Pratique') continue; //TODO : just for tests
-    $nom_fichier = $pages_out_dir  . "/" . article_name_convertion($data['tag']) . '.txt';
+	$nom_fichier = $pages_out_dir  . "/" . article_name_convertion($value['tag']) . '.txt';
     $monfichier = fopen($nom_fichier, "w");
-    $body_transforme = transforme_body($data['body']);
+    $body_transforme = transforme_body($value['body']);
 	fputs($monfichier, $body_transforme);
     fclose($monfichier);
-    echo "generated " . $pages_out_dir . "/" . article_name_convertion($data['tag']) . '.txt' . "<br/>";
+    echo "generated " . $pages_out_dir . "/" . article_name_convertion($value['tag']) . '.txt' . "<br/>";
     $cpt ++;
 }
 // echo "$cpt articles écrits <br/>";

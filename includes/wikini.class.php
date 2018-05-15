@@ -14,7 +14,7 @@ class Wikini {
 	
 	
 	public static function connect() {
-		global $mysql_host, $mysql_login, $mysql_password, $base;
+		global $mysql_host, $mysql_port, $mysql_login, $mysql_password, $base;
 		
 		// connection to MySQL
 		$mysql_link = new mysqli();
@@ -22,7 +22,7 @@ class Wikini {
 		if (!$mysql_link) {
 			die('mysqli init failed');
 		}
-		if (!$mysql_link->real_connect($mysql_host, $mysql_login, $mysql_password, $base)) {
+		if (!$mysql_link->real_connect($mysql_host, $mysql_login, $mysql_password, $base, $mysql_port)) {
 			die('Connect Error (' . $mysql_link->errno . ') ' . $mysql_link->error);
 		}
 		$mysql_link->set_charset('utf8');
@@ -73,7 +73,7 @@ class Wikini {
 	}
 	
 	
-	public function get_all_pages() {
+	public function get_last_pages() {
 		global $wikini_table_prefix, $wikini_pages_table_name;
 		global $wikini_user_filter, $wikini_page_filter, $wikini_log_pages;
 	
@@ -84,8 +84,10 @@ class Wikini {
 			WHERE		user NOT IN ( " . string_list_to_sql_list($wikini_user_filter) . " )
 				AND		tag NOT IN ( " . string_list_to_sql_list($wikini_page_filter) . " )
 				AND		tag NOT LIKE '$wikini_log_pages%'
+				AND		latest = 'Y'
 			ORDER BY	tag ASC, time DESC
 		";
+// 		var_dump($sql); die;
 		$result = $this->mysql_link->query($sql) or die($this->mysql_link->error);
 		$array = array();
 		while( $data = $result->fetch_array() )
@@ -94,7 +96,7 @@ class Wikini {
 				$array[$data['tag']] = array();
 			}
 			$last_tag = $data['tag'];
-			$array[$data['tag']][] = $data;
+			$array[$data['tag']] = $data;
 		}
 		return $array;
 	}
