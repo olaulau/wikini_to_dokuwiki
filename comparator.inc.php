@@ -15,7 +15,7 @@ require_once("includes/wikini.class.php");
 
 if(!empty($_GET['article']))
 	$article = $_GET['article'];
-else 
+else
 	$article = $wikini_start_page;
 
 
@@ -23,8 +23,8 @@ $w = new Wikini();
 $tags = $w->get_pages_tags();
 
 $key = array_search($article, $tags);
-$previous = $tags[$key-1];
-$next = $tags[$key+1];
+$previous = ($key-1 >=0 ? $tags[$key-1] : '');
+$next = ($key+1 < count($tags) ? $tags[$key+1] : '');
 
 ?>
 	<span id="entete">
