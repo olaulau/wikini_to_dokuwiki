@@ -9,9 +9,9 @@
 <body>
 
 <?php
-require_once("includes/conf.inc.php");
-require_once("includes/fonctions.inc.php");
-require_once("includes/wikini.class.php");
+require_once("conf.inc.php");
+require_once("fonctions.inc.php");
+require_once("wikini.class.php");
 
 if(!empty($_GET['article']))
 	$article = $_GET['article'];

@@ -18,6 +18,6 @@ function display_dokuwiki_side($article, $w) {
 	<?php
 }
 
-require_once 'comparator.inc.php';
+require_once 'includes/comparator.inc.php';
 
 ?>

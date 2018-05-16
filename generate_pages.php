@@ -13,10 +13,6 @@ function clean_dokuwiki_directories() {
 	{
 		remove_all_files($out_directory . "/" . $pages_subdir);
 		rmdir($out_directory . "/" . $pages_subdir);
-		// remove_all_files($out_directory . "/" . $history_subdir);
-		// rmdir($out_directory . "/" . $history_subdir);
-		// remove_all_files($out_directory . "/" . $meta_subdir);
-		// rmdir($out_directory . "/" . $meta_subdir);
 		rmdir($out_directory);
 	}
 	
@@ -30,8 +26,6 @@ clean_dokuwiki_directories();
 // prepare temporary folders
 mkdir($out_directory);
 mkdir($out_directory . "/" . $pages_subdir);
-// mkdir($out_directory . "/" . $history_subdir);
-// mkdir($out_directory . "/" . $meta_subdir);
 
 
 // init
@@ -57,46 +51,18 @@ foreach ($pages as $tag => $histo) {
     echo "generated " . $pages_out_dir . "/" . article_name_convertion($page['tag']) . '.txt' . "<br/>";
     $cpt ++;
 }
-// echo "$cpt articles écrits <br/>";
+echo "$cpt pages written <br/>";
 
-
-/*
-// écriture de l'historique
-$sql_query =
-"SELECT *
-FROM `wikini_pages`
-where user not in ( 'WikiNiInstaller', 'WikiAdmin' )
-order by tag asc, time desc";
-$history_out_dir = $out_directory . "/" . $history_subdir;
-$reponse = $mysqli->query($sql_query);
-$cpt = 0;
-while ($donnees = $reponse->fetch_object() )
-{
-	$tag = $donnees->tag;
-//	if($tag != 'WampEclipse') continue; //TODO : just for tests
-	$datetime = new DateTime($donnees->time);
-    $nom_fichier = $history_out_dir  . "/" . $tag . "." .$datetime->getTimestamp() . '.txt.gz';
-    $monfichier = gzopen($nom_fichier, "wb");
-    gzwrite($monfichier, utf8_encode($donnees->body));
-    gzclose($monfichier);
-    $cpt++;
-}
-echo "$cpt historiques écrits";
-*/
 
 // clean dest & copy files
 if(file_exists($dokuwiki_install_dir))
 {
 	remove_all_files($dokuwiki_install_dir . "/" . $data_directory . '/' . $pages_subdir);
-	// remove_all_files($dokuwiki_install_dir . "/" . $data_directory . '/' . $history_subdir);
-	// remove_all_files($dokuwiki_install_dir . "/" . $data_directory . '/' . $meta_subdir);
-	
 	copy_all_files($pages_out_dir, $dokuwiki_install_dir . '/' . $data_directory . '/' . "/" . $pages_subdir);
-// 	copy_all_files($history_out_dir, $dokuwiki_install_dir . '/' . $data_directory . '/' . "/" . $history_subdir);
 }
 else
 {
-	echo "répertoire wikini ('" . $dokuwiki_install_dir . "') pas présent. vérifier la config.";
+	echo "wikini directory ('" . $dokuwiki_install_dir . "') doesn't exist. please verify config.";
 }
 
 
