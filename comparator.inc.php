@@ -18,13 +18,15 @@ if(!empty($_GET['article']))
 else
 	$article = $wikini_start_page;
 
+// init
+$wikini = new Wikini();
+$wikini->load();
+$pages = $wikini->get_pages();
+$tags = array_keys($pages);
 
-$w = new Wikini();
-$tags = $w->get_pages_tags();
-
-$key = array_search($article, $tags);
-$previous = ($key-1 >=0 ? $tags[$key-1] : '');
-$next = ($key+1 < count($tags) ? $tags[$key+1] : '');
+$i = array_search($article, $tags);
+$previous = ($i-1 >=0 ? $tags[$i-1] : '');
+$next = ($i+1 < count($tags) ? $tags[$i+1] : '');
 
 ?>
 	<span id="entete">
@@ -50,12 +52,12 @@ $url_dokuwiki = $dokuwiki_url . "/doku.php?id=" . article_name_convertion($artic
 ?>
 	<div id="gauche">
 		<?php
-		display_wikini_side($article, $w);
+		display_wikini_side($article, $wikini);
 		?>
 	</div>
 	<div id="droite">
 		<?php
-		display_dokuwiki_side($article, $w);
+		display_dokuwiki_side($article, $wikini);
 		?>
 	</div>
 

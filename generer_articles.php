@@ -7,17 +7,24 @@ require_once('includes/wikini.class.php');
 $debug = FALSE;
 
 
-// clean temporary files before
-if(file_exists($out_directory))
-{
-	remove_all_files($out_directory . "/" . $pages_subdir);
-	rmdir($out_directory . "/" . $pages_subdir);
-	// remove_all_files($out_directory . "/" . $history_subdir);
-	// rmdir($out_directory . "/" . $history_subdir);
-	// remove_all_files($out_directory . "/" . $meta_subdir);
-	// rmdir($out_directory . "/" . $meta_subdir);
-	rmdir($out_directory);
+function clean_dokuwiki_directories() {
+	global $out_directory, $pages_subdir, $history_subdir, $meta_subdir;
+	if(file_exists($out_directory))
+	{
+		remove_all_files($out_directory . "/" . $pages_subdir);
+		rmdir($out_directory . "/" . $pages_subdir);
+		// remove_all_files($out_directory . "/" . $history_subdir);
+		// rmdir($out_directory . "/" . $history_subdir);
+		// remove_all_files($out_directory . "/" . $meta_subdir);
+		// rmdir($out_directory . "/" . $meta_subdir);
+		rmdir($out_directory);
+	}
+	
 }
+
+
+// clean temporary files before
+clean_dokuwiki_directories();
 
 
 // prepare temporary folders
@@ -29,21 +36,25 @@ mkdir($out_directory . "/" . $pages_subdir);
 
 // init
 $wikini = new Wikini();
+$wikini->load();
+$pages = $wikini->get_pages();
+// var_dump($pages); die;
 
 
 // écriture des articles
-$array = $wikini->get_last_pages();
-// var_dump($array); die;
 $pages_out_dir = $out_directory . "/" . $pages_subdir;
 $cpt = 0;
-foreach ($array as $key => $value) {
-// 	if($data['tag'] != 'Pratique') continue; //TODO : just for tests
-	$nom_fichier = $pages_out_dir  . "/" . article_name_convertion($value['tag']) . '.txt';
+foreach ($pages as $tag => $histo) {
+	$page = reset($histo); // last page
+// 	if($value['tag'] != 'X30Hardy') continue; //TODO : just for tests
+	$nom_fichier = $pages_out_dir  . "/" . article_name_convertion($page['tag']) . '.txt';
+// 	echo $value['tag'] . " => " . $nom_fichier;	die;
+	
     $monfichier = fopen($nom_fichier, "w");
-    $body_transforme = transforme_body($value['body']);
+    $body_transforme = transforme_body($page['body']);
 	fputs($monfichier, $body_transforme);
     fclose($monfichier);
-    echo "generated " . $pages_out_dir . "/" . article_name_convertion($value['tag']) . '.txt' . "<br/>";
+    echo "generated " . $pages_out_dir . "/" . article_name_convertion($page['tag']) . '.txt' . "<br/>";
     $cpt ++;
 }
 // echo "$cpt articles écrits <br/>";
@@ -91,11 +102,5 @@ else
 
 // clean temporary files after
 if(!$debug) {
-	remove_all_files($out_directory . "/" . $pages_subdir);
-	rmdir($out_directory . "/" . $pages_subdir);
-	// remove_all_files($out_directory . "/" . $history_subdir);
-	// rmdir($out_directory . "/" . $history_subdir);
-	// remove_all_files($out_directory . "/" . $meta_subdir);
-	// rmdir($out_directory . "/" . $meta_subdir);
-	rmdir($out_directory);
+	clean_dokuwiki_directories();
 }
